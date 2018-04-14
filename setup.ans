@@ -16,6 +16,13 @@
      owner: trueprog
      group: trueprog
      mode: 0644
+  - name: Create robots.txt
+    template:
+      src: robots.template
+      dest: /var/www/virtual/trueprog/itnonschool.net/robots.txt
+      owner: trueprog
+      group: trueprog
+      mode: 0644
   - name: Clone repo
     git:
       repo: https://github.com/trueprog/itnonschool
