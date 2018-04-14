@@ -9,8 +9,8 @@
       owner: trueprog
       group: trueprog
       mode: 0755
-  -name: Create htaccess
-   template:
+  - name: Create htaccess
+    template:
      src: htaccess-template
      dest: /var/www/virtual/trueprog/itnonschool.net/.htaccess
      owner: trueprog
@@ -20,9 +20,12 @@
     git:
       repo: https://github.com/trueprog/itnonschool
       dest: /home/trueprog/itnonschool
-  - name: Rails bundle
-    shell: bundle install --clean --frozen --deployment > bundle.log
-      chdir: /home/trueprog/itnonschool/site
+  - name: Bundle install
+    shell: bundle install --clean --deployment --frozen > bundle-install.log
+    args:
+      chdir: itnonschool/site
   - name: Migrate database
-    shell: RAILS_ENV=production bundle exec rake db:migrate
-      chdir: /home/trueprog/itnonschool/site
+    shell: RAILS_ENV=production bundle exec rake db:migrate > rake-db-migrate.log
+    args:
+      chdir: itnonschool/site
+
