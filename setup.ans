@@ -32,6 +32,7 @@
     git:
       repo: https://github.com/trueprog/itnonschool
       dest: /home/trueprog/itnonschool
+      force: yes
   - name: Bundle install
     shell: bundle install --clean --deployment --frozen > bundle-install.log
     args:
@@ -40,8 +41,22 @@
     shell: RAILS_ENV=production bundle exec rake db:migrate > rake-db-migrate.log
     args:
       chdir: itnonschool/site
-  - name: Create service directory
-    shell: uberspace-setup-svcscan
+  - name: Precompile assets
+    shell: RAILS_ENV=production bundle exec rake assets:precompile > rake-assets-precompile.log
     args:
-      creates: service
+      chdir: itnonschool/site
+  - name: Create service.d
+    template:
+      src: services-d-template
+      dest: etc/services.d/itnonschool.ini
+  - name: Crate service script
+    template:
+      src: service-template
+      dest: bin/itnonschool
+      mode: 755
+  - name: Start service
+    shell: |
+      supervisorctl reread
+      supervisorctl update
+      supervisorctl start
 
