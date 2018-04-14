@@ -1,0 +1,4 @@
+RewriteBase /
+RewriteEngine On
+RewriteRule ^dyn/(.*) http://localhost:29246/$1 [P]
+
