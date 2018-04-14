@@ -9,6 +9,11 @@
       owner: trueprog
       group: trueprog
       mode: 0755
+  - name: Create symlink
+    file:
+      src: /var/www/virtual/trueprog/itnonschool.net
+      dest: /home/trueprog/itnonschool.net
+      state: link
   - name: Create htaccess
     template:
      src: htaccess-template
