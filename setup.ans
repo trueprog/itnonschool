@@ -35,4 +35,8 @@
     shell: RAILS_ENV=production bundle exec rake db:migrate > rake-db-migrate.log
     args:
       chdir: itnonschool/site
+  - name: Create service directory
+    shell: uberspace-setup-svcscan
+    args:
+      creates: service
 

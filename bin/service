@@ -1,0 +1,10 @@
+#! /bin/bash
+
+export SECRET_KEY_BASE=`bundle exec rake secret`
+export RAILS_SERVE_STATIC_FILES=true
+export RAILS_ENV=production
+
+cd site
+
+bundle exec unicorn_rails -l 127.0.0.1:29246
+
