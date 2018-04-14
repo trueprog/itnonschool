@@ -1,0 +1,28 @@
+---
+- hosts: uberspace
+  remote_user: trueprog
+  tasks:
+  - name: Create web directory
+    file:
+      path: /var/www/virtual/trueprog/itnonschool.net
+      state: directory
+      owner: trueprog
+      group: trueprog
+      mode: 0755
+  -name: Create htaccess
+   template:
+     src: htaccess-template
+     dest: /var/www/virtual/trueprog/itnonschool.net/.htaccess
+     owner: trueprog
+     group: trueprog
+     mode: 0644
+  - name: Clone repo
+    git:
+      repo: https://github.com/trueprog/itnonschool
+      dest: /home/trueprog/itnonschool
+  - name: Rails bundle
+    shell: bundle install --clean --frozen --deployment > bundle.log
+      chdir: /home/trueprog/itnonschool/site
+  - name: Migrate database
+    shell: RAILS_ENV=production bundle exec rake db:migrate
+      chdir: /home/trueprog/itnonschool/site
