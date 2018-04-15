@@ -28,6 +28,11 @@
       owner: trueprog
       group: trueprog
       mode: 0644
+  - name: Create database
+    mysql_db:
+      name: trueprog_itnonschool
+      state: present
+      encoding: utf8
   - name: Clone repo
     git:
       repo: https://github.com/trueprog/itnonschool
@@ -49,7 +54,7 @@
     template:
       src: services-d-template
       dest: etc/services.d/itnonschool.ini
-  - name: Crate service script
+  - name: Create service script
     template:
       src: service-template
       dest: bin/itnonschool
