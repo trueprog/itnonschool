@@ -34,7 +34,7 @@
       dest: /home/trueprog/itnonschool
       force: yes
   - name: Bundle install
-    shell: bundle install --clean --deployment --frozen > bundle-install.log
+    shell: RAILS_ENV=production bundle install --clean --deployment --frozen > bundle-install.log
     args:
       chdir: itnonschool/site
   - name: Migrate database
